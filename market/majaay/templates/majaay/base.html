@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>MaJaay Market</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Flag Icons CDN for language switcher -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@6.7.0/css/flag-icons.min.css">
+        <style>
+                body { background: #f8fafc; }
+                .navbar-brand { font-weight: bold; letter-spacing: 1px; }
+                .hero { background: linear-gradient(90deg, #4f8cff 0%, #38b6ff 100%); color: #fff; padding: 3rem 0; text-align: center; }
+                .main-content { margin-top: 2rem; }
+                footer { background: #222; color: #fff; padding: 1rem 0; text-align: center; margin-top: 3rem; }
+        </style>
+</head>
+<body>
+
+                <nav class="navbar navbar-expand-lg navbar-light" style="background:#f8fafc; box-shadow:0 2px 4px rgba(0,0,0,0.04);">
+                                <div class="container">
+                                        <a class="navbar-brand" href="/">MaJaay Market</a>
+                                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                                <span class="navbar-toggler-icon"></span>
+                                        </button>
+                                        <div class="collapse navbar-collapse" id="navbarNav">
+                                                <ul class="navbar-nav ms-auto">
+                <li class="nav-item ms-2">
+                    <form action="{% url 'set_language' %}" method="post" class="d-flex align-items-center">
+                        {% csrf_token %}
+                        <select name="language" class="form-select form-select-sm" onchange="this.form.submit()" style="width:auto;">
+                            <option value="fr" {% if LANGUAGE_CODE == 'fr' %}selected{% endif %}>🇫🇷 FR</option>
+                            <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>🇬🇧 EN</option>
+                        </select>
+                    </form>
+                </li>
+                                                        <li class="nav-item"><a class="nav-link" href="/majaay/categories/">Products</a></li>
+                                                        <li class="nav-item"><a class="nav-link" href="/majaay/seller/register/">Become a Seller</a></li>
+                                                        <li class="nav-item"><a class="nav-link" href="/admin/">Admin</a></li>
+                                                        {% if user.is_authenticated %}
+                                                                <li class="nav-item"><a class="nav-link" href="/majaay/seller/dashboard/">Dashboard</a></li>
+                                                                {% if user.is_superuser or user.is_manager %}
+                                                                        <li class="nav-item"><a class="nav-link" href="/majaay/buyers/manage/">Manage Buyers</a></li>
+                                                                        <li class="nav-item"><a class="nav-link" href="/majaay/sellers/manage/">Manage Sellers</a></li>
+                                                                {% endif %}
+                                                                <li class="nav-item"><a class="nav-link" href="/majaay/logout/">Logout</a></li>
+                                                        {% else %}
+                                                                <li class="nav-item"><a class="nav-link" href="/majaay/login/">Seller Login</a></li>
+                                                        {% endif %}
+                                                </ul>
+                                        </div>
+                                </div>
+                        </nav>
+
+                                <!-- Category Image Carousel -->
+                                <div id="categoryCarousel" class="carousel slide" data-bs-ride="carousel" style="max-width:100vw; background:#f8fafc;">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80" class="d-block w-100" style="max-height:220px;object-fit:cover;" alt="Electronics">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>Electronics</h5>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1200&q=80" class="d-block w-100" style="max-height:220px;object-fit:cover;" alt="Clothing">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>Clothing</h5>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" class="d-block w-100" style="max-height:220px;object-fit:cover;" alt="Housing">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>Housing</h5>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1200&q=80" class="d-block w-100" style="max-height:220px;object-fit:cover;" alt="Toys & Games">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>Toys & Games</h5>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="https://sdmntprnortheu.oaiusercontent.com/files/00000000-0070-61f4-8d50-eb35c8c27f6a/raw?se=2025-08-12T17%3A14%3A53Z&sp=r&sv=2024-08-04&sr=b&scid=3b0ae518-3c50-538d-aa95-b9ce208df61f&skoid=eb780365-537d-4279-a878-cae64e33aa9c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-08-12T07%3A30%3A54Z&ske=2025-08-13T07%3A30%3A54Z&sks=b&skv=2024-08-04&sig=Ih0rk9TrBXEiAN9OaDs287myvaRc41Cb2R6wkPjqvas%3D" class="d-block w-100" style="max-height:220px;object-fit:cover;" alt="Custom Image">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>Special</h5>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1200&q=80" class="d-block w-100" style="max-height:220px;object-fit:cover;" alt="Clothing">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>Clothing</h5>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" class="d-block w-100" style="max-height:220px;object-fit:cover;" alt="Housing">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>Housing</h5>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1200&q=80" class="d-block w-100" style="max-height:220px;object-fit:cover;" alt="Toys & Games">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>Toys & Games</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#categoryCarousel" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#categoryCarousel" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+
+        <div class="hero">
+            <div class="container">
+                <h1 class="display-4">Welcome to MaJaay Market</h1>
+                <p class="lead">Your trusted platform to buy and sell products with ease.</p>
+                <a  href="/majaay/categories/" class="btn btn-primary btn-lg mt-3">Start Shopping</a>
+            </div>
+        </div>
+
+        <div class="container main-content">
+            {% if request.path == '/' %}
+                <h2 class="text-center my-4" id="categories">Shop by Category</h2>
+                <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
+                    {% for cat in categories %}
+                    <div class="col mb-4">
+                        <div class="card h-100 text-center shadow-sm">
+                            <div class="card-body">
+                                <div style="font-size:2.5rem; color:#38b6ff;">
+                                    <i class="bi bi-tag"></i>
+                                </div>
+                                <h5 class="card-title mt-2">{{ cat.name }}</h5>
+                                <p class="card-text small">{{ cat.description }}</p>
+                                <a href="/majaay/products/?category={{ cat.slug }}" class="btn btn-outline-primary btn-sm">Browse &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="row mt-5 text-center">
+                    <div class="col-md-4">
+                        <div style="font-size:2rem;"><i class="bi bi-person-plus"></i></div>
+                        <h6>For Sellers</h6>
+                        <p class="small">Register to become a seller. We'll review your application and create your account.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div style="font-size:2rem;"><i class="bi bi-box-seam"></i></div>
+                        <h6>List Products</h6>
+                        <p class="small">Upload your products with photos and description. We add a 5% service fee.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div style="font-size:2rem;"><i class="bi bi-cart-check"></i></div>
+                        <h6>For Buyers</h6>
+                        <p class="small">Browse and purchase without making an account. Simple checkout process.</p>
+                    </div>
+                </div>
+            {% else %}
+                {% block content %}{% endblock %}
+            {% endif %}
+        </div>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+        <footer>
+            <div class="container">&copy; {{ now|default:2025 }} MaJaay Market. All rights reserved.</div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

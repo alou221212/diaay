@@ -1,0 +1,30 @@
+{% extends 'majaay/base.html' %}
+{% block content %}
+  <h2>Add New Product</h2>
+  <form method="post" enctype="multipart/form-data" class="row g-3">{% csrf_token %}
+    <div class="col-md-6">
+      {{ form.title.label_tag }}
+      {{ form.title }}
+    </div>
+    <div class="col-md-6">
+      {{ form.category.label_tag }}
+      {{ form.category }}
+    </div>
+    <div class="col-12">
+      {{ form.description.label_tag }}
+      {{ form.description }}
+    </div>
+    <div class="col-md-6">
+      {{ form.price.label_tag }}
+      {{ form.price }}
+      <div class="form-text">Le prix final affiché sera augmenté de 5%.</div>
+    </div>
+    <div class="col-md-6">
+      {{ form.image.label_tag }}
+      {{ form.image }}
+    </div>
+    <div class="col-12">
+      <button class="btn btn-success">Save</button>
+    </div>
+  </form>
+{% endblock %}

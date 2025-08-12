@@ -1,0 +1,41 @@
+{% extends 'majaay/base.html' %}
+{% block content %}
+<h2 class="text-center my-4">Shop by Category</h2>
+<div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
+  {% for cat in categories %}
+  <div class="col mb-4">
+    <div class="card h-100 text-center shadow-sm">
+      <div class="card-body">
+        <div style="font-size:2.5rem; color:#38b6ff;">
+          <i class="bi bi-tag"></i>
+        </div>
+        <h5 class="card-title mt-2">{{ cat.name }}</h5>
+        <p class="card-text small">{{ cat.description }}</p>
+        <a href="{% url 'product_list' %}?category={{ cat.slug }}" class="btn btn-outline-primary btn-sm">Browse &rarr;</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% if selected_category %}
+  <h3 class="mt-5 mb-3 text-center">{{ selected_category.name }}</h3>
+  <div class="row">
+    {% for product in products %}
+      <div class="col-md-4">
+        <div class="card mb-3">
+          {% if product.image %}<img src="{{ product.image.url }}" class="card-img-top" style="max-height:200px;object-fit:cover;">{% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ product.title }}</h5>
+            <p class="card-text">{{ product.description|truncatechars:100 }}</p>
+            <p class="card-text"><strong>{{ product.displayed_price }} </strong></p>
+            <a href="{% url 'product_detail' product.pk %}" class="btn btn-primary">Voir / Commander</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12"><p class="text-center">Aucun produit trouvé dans cette catégorie.</p></div>
+    {% endfor %}
+  </div>
+{% endif %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'majaay/base.html' %}
+{% block content %}
+  <h2>Seller Dashboard</h2>
+  <p>Welcome, {{ user.get_full_name|default:user.username }}!</p>
+  <h4>Your Products</h4>
+  <ul>
+    {% for product in products %}
+      <li>{{ product.title }} - {{ product.displayed_price }} {% if product.approved %}(Approved){% else %}(Pending){% endif %}</li>
+    {% empty %}
+      <li>You have not added any products yet.</li>
+    {% endfor %}
+  </ul>
+  <a href="/majaay/seller/product/add/" class="btn btn-primary">Add New Product</a>
+{% endblock %}

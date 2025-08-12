@@ -1,0 +1,46 @@
+{% extends 'majaay/base.html' %}
+{% block content %}
+<h2 class="text-center my-4">Shop by Category</h2>
+<div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
+  {% for cat in categories %}
+  <div class="col mb-4">
+    <div class="card h-100 text-center shadow-sm">
+      <div class="card-body">
+        <div style="font-size:2.5rem; color:#38b6ff;">
+          <i class="bi bi-tag"></i>
+        </div>
+        <h5 class="card-title mt-2">{{ cat.name }}</h5>
+        <p class="card-text small">{{ cat.description }}</p>
+  <a href="{% url 'category_products' cat.slug %}" class="btn btn-outline-primary btn-sm">Browse &rarr;</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+{% endblock %}
+<footer class="footer mt-5 py-4 bg-light border-top">
+  <div class="container">
+    <div class="mb-4 text-center">
+      <a href="/majaay/categories/" class="btn btn-primary btn-lg px-5">Start Shopping</a>
+    </div>
+    <div class="row justify-content-center text-center">
+      <div class="col-12 col-md-4 mb-3">
+        <div style="font-size:2.5rem; color:#007bff;"><i class="bi bi-box-seam"></i></div>
+        <div class="fw-bold">For Sellers</div>
+        <div class="small">List your products and grow your business.</div>
+      </div>
+      <div class="col-12 col-md-4 mb-3">
+        <div style="font-size:2.5rem; color:#28a745;"><i class="bi bi-bag"></i></div>
+        <div class="fw-bold">For Buyers</div>
+        <div class="small">Browse categories and find great deals.</div>
+      </div>
+      <div class="col-12 col-md-4 mb-3">
+        <div style="font-size:2.5rem; color:#ffc107;"><i class="bi bi-headset"></i></div>
+        <div class="fw-bold">Support</div>
+        <div class="small">Contact us for help and information.</div>
+      </div>
+    </div>
+    <div class="text-center text-muted mt-3 small">&copy; 2025 MaJaay Market. All rights reserved.</div>
+  </div>
+</footer>

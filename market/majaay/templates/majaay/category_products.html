@@ -1,0 +1,28 @@
+{% extends 'majaay/base.html' %}
+{% block content %}
+<h2 class="text-center my-4">Products in {{ category.name }}</h2>
+<div class="mb-3">
+  <a href="/" class="btn btn-outline-secondary btn-sm">&larr; Back to Home</a>
+</div>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for product in products %}
+  <div class="col mb-4">
+    <div class="card h-100 shadow-sm">
+      {% if product.image %}
+      <img src="{{ product.image.url }}" class="card-img-top" style="max-height:180px;object-fit:cover;" alt="{{ product.title }}">
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{ product.title }}</h5>
+        <p class="card-text">{{ product.description|truncatewords:20 }}</p>
+  <div class="fw-bold mb-2">{{ product.price_with_markup }} FCFA</div>
+        <a href="{% url 'product_detail' product.pk %}" class="btn btn-primary btn-sm">View & Order</a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="col">
+    <div class="alert alert-info">No products found in this category.</div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

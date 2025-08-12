@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>{{ product.title }}</h2>
+  {% if product.image %}<img src="{{ product.image.url }}" style="max-width:300px;">{% endif %}
+  <p>{{ product.description }}</p>
+  <p>Price: <strong>{{ product.displayed_price }}</strong></p>
+  <h3>Order</h3>
+  <form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-success">Place order</button>
+  </form>
+{% endblock %}
